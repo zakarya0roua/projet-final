@@ -11,7 +11,7 @@ let apprenants = [
                 totalExercices: 20, challengeTermine: true },
             { jour: 2, exercicesTermines: 14,
                 totalExercices: 20, challengeTermine: false }
-        ]
+            ]
     },
     {
         id: 2,
@@ -20,9 +20,8 @@ let apprenants = [
         resultats: [
             { jour: 1, exercicesTermines: 12,
                 totalExercices: 20, challengeTermine: false }
-        ]
+            ]
     }
-
 ];
 
 console.log("SAS PROGRESS CONSOLE");
@@ -49,6 +48,7 @@ do{
             break;
         case 3:
             console.log("3. Ajouter un apprenant");
+            ajouterApprenant();
             break;
         case 4:
             console.log("4. Consulter un apprenant par identifiant");
@@ -76,4 +76,69 @@ do{
             break;
     }
 
-}while(choix !== 0)
+}while(choix !== 0);
+
+// fonction normaiser des nom
+
+function normaliserNom(nom){
+    nom = nom.toLowerCase();
+    nom = nom.trim();
+    nom = nom.replace(/\s+/g, " ")
+    return nom;
+}
+
+// fanction valider des resultat
+
+function validerResultat(jour, exercicesTermines, totalExercices) {
+    if (isNaN(jour) || jour < 1 || jour > 7) {
+        return false;
+    }
+
+    if (totalExercices !== 20) {
+        return false;
+    }
+
+    if (isNaN(exercicesTermines) || exercicesTermines < 0 || exercicesTermines > totalExercices) {
+        return false;
+    }
+
+    return true;
+}
+
+
+//fonction qui ajouter apprenent
+
+function ajouterApprenant(id, nomComplet, ville){
+
+    id = Number(prompt("Enter votre id: "));
+    nomComplet = prompt("Enter votre nom complet: ");
+    ville = prompt("Enter votre ville: ");
+
+    return (
+    {
+        id,
+        nomComplet: normaliserNom(nomComplet),
+        ville: normaliserNom(ville),
+        resultats: []
+    }
+    )
+
+}
+
+//fonction qui enregistrer resultat
+
+function enregistrerResultat(apprenant){
+    let arr = [];
+
+    if(apprenants.id){
+        let tchique = validerResultat(apprenants.jour);
+        if(apprenant.id.jour){
+            apprenant.id.jour = 0;
+        }else
+            arr.push(apprenant);
+        }
+
+
+
+}
+
