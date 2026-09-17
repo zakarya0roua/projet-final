@@ -83,27 +83,42 @@ do{
 function normaliserNom(nom){
     nom = nom.toLowerCase();
     nom = nom.trim();
-    nom = nom.replace(/\s+/g, " ")
-    return nom;
+    nom = nom.split(" ")
+    nomComplet = "";
+    coump = 1;
+    for(let i = 0; i < nom.length; i++){
+        if(nom[i] === "" && coump == 1) {
+            nomComplet += " "
+            coump++;
+        }
+        if(nom[i] !== ""){
+            nomComplet += nom[i]
+        }
+
+    }
+    return nomComplet;
 }
+
+
 
 // fanction valider des resultat
 
 function validerResultat(jour, exercicesTermines, totalExercices) {
-    if (isNaN(jour) || jour < 1 || jour > 7) {
+    if (jour < 1 || jour > 7 || jour !== Number) {
         return false;
     }
 
-    if (totalExercices !== 20) {
+    if (totalExercices !== 20 || totalExercices !== Number) {
         return false;
     }
 
-    if (isNaN(exercicesTermines) || exercicesTermines < 0 || exercicesTermines > totalExercices) {
+    if (exercicesTermines < 0 || exercicesTermines > totalExercices || exercicesTermines !== Number) {
         return false;
     }
 
     return true;
 }
+
 
 
 //fonction qui ajouter apprenent
@@ -137,8 +152,6 @@ function enregistrerResultat(apprenant){
         }else
             arr.push(apprenant);
         }
-
-
 
 }
 
