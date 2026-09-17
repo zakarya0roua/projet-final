@@ -1,7 +1,6 @@
 const prompt = require("prompt-sync")();
 
-
-let apprenants = [
+const apprenants = [
     {
         id: 1,
         nomComplet: "Sara Dev",
@@ -48,7 +47,7 @@ do{
             break;
         case 3:
             console.log("3. Ajouter un apprenant");
-            ajouterApprenant();
+            console.log(ajouterApprenant());
             break;
         case 4:
             console.log("4. Consulter un apprenant par identifiant");
@@ -84,8 +83,8 @@ function normaliserNom(nom){
     nom = nom.toLowerCase();
     nom = nom.trim();
     nom = nom.split(" ")
-    nomComplet = "";
-    coump = 1;
+    let nomComplet = "";
+    let coump = 1;
     for(let i = 0; i < nom.length; i++){
         if(nom[i] === "" && coump == 1) {
             nomComplet += " "
@@ -100,58 +99,90 @@ function normaliserNom(nom){
 }
 
 
-
 // fanction valider des resultat
 
 function validerResultat(jour, exercicesTermines, totalExercices) {
-    if (jour < 1 || jour > 7 || jour !== Number) {
+    if (jour < 1 || jour > 7) {
         return false;
     }
-
-    if (totalExercices !== 20 || totalExercices !== Number) {
+    
+    if (totalExercices !== 20) {
         return false;
     }
-
-    if (exercicesTermines < 0 || exercicesTermines > totalExercices || exercicesTermines !== Number) {
+    
+    if (exercicesTermines < 0 || exercicesTermines > totalExercices) {
         return false;
     }
-
+    
     return true;
 }
-
-
 
 //fonction qui ajouter apprenent
 
 function ajouterApprenant(id, nomComplet, ville){
-
     id = Number(prompt("Enter votre id: "));
+    for(let i = 0; i < apprenants.length; i++){
+        while(apprenants[i].id === id){
+            id = Number(prompt("Enter nouveau id: "))
+        }
+    }
+   
     nomComplet = prompt("Enter votre nom complet: ");
     ville = prompt("Enter votre ville: ");
-
-    return (
-    {
-        id,
+    let newApprenant = {
+        id: id,
         nomComplet: normaliserNom(nomComplet),
         ville: normaliserNom(ville),
         resultats: []
     }
-    )
-
+    apprenants.push(newApprenant);
+    return newApprenant;
 }
 
 //fonction qui enregistrer resultat
 
-function enregistrerResultat(apprenant){
-    let arr = [];
-
-    if(apprenants.id){
-        let tchique = validerResultat(apprenants.jour);
-        if(apprenant.id.jour){
-            apprenant.id.jour = 0;
-        }else
-            arr.push(apprenant);
+function enregistrerResultat(id, jour, exercicesTermines, totalExercices) {
+    // verification des ID
+    let appTrouve;
+    for(let i = 0; i < apprenants.length;i++){
+        if(apprenants[i].id === id){
+            appTrouve = apprenants[i];
+            break;
         }
+    }
+    if(appTrouve == null){
+        console.log("appreant non Trouve");
+    }
 
+    // verification des jour
+
+    let verifieJour = validerResultat(jour, exercicesTermines, totalExercices);
+    if(!(verifieJour)){
+        console.log("les donne sont valide");
+        return;
+    }
+    let resultatDeJour = null;
+    for(let i = 0; apprenants.resultats.length; i++){
+        if(appTrouve.resultats[i].jour == jour){
+            resultatDeJour = appTrouve.resultats[i];
+            break;
+        }
+    }
+    if(resultatDeJour !== null){
+        resultatDeJour.exercicesTermines = exercicesTermines;
+        resultatDeJour.totalExercices = totalExercices;
+        console.log("Mettre à jour une journée");
+    }
+    else
+    {
+        apprenants.resultats.push({
+            jour: jour,
+            exercicesTermines: exercicesTermines,
+            totalExercices: totalExercices,
+            challengeTermine: challengeTermine
+        })
+        console.log("Jour ajoute")
+    }
 }
+
 
