@@ -71,7 +71,7 @@ do{
             console.log("0. Quitter");
             break;
         default:
-            console.log("entrer un nomber entre 0 et 9")
+            console.log("entrer un nomber entre 0 et 9");
             break;
     }
 
@@ -119,7 +119,7 @@ function validerResultat(jour, exercicesTermines, totalExercices) {
 
 //fonction qui ajouter apprenent
 
-function ajouterApprenant(id, nomComplet, ville){
+function ajouterApprenant(id, nom, ville){
     id = Number(prompt("Enter votre id: "));
     for(let i = 0; i < apprenants.length; i++){
         while(apprenants[i].id === id){
@@ -131,7 +131,7 @@ function ajouterApprenant(id, nomComplet, ville){
     ville = prompt("Enter votre ville: ");
     let newApprenant = {
         id: id,
-        nomComplet: normaliserNom(nomComplet),
+        nomComplet: normaliserNom(nom),
         ville: normaliserNom(ville),
         resultats: []
     }
@@ -185,4 +185,27 @@ function enregistrerResultat(id, jour, exercicesTermines, totalExercices) {
     }
 }
 
+// fonctoin des calculer progression
 
+function calculerProgression(appreant){
+    let result = appreant.resultats[i];
+    let totalExercice = 0;
+    let totalProgrcice = 0;
+    let coumptChallenge = 0;
+    let joursRs = appreant.resultats.length;
+    if(result.challengeTermine){
+        coumptChallenge++;
+    }
+
+    let progress;
+    if(totalProgrcice != 0){
+        progress = ((totalExercice / totalProgrcice) * 100);
+        progress = Number(progress.toFixed(2));
+    }
+    return{
+        exercicesTermine: exercicesTermine,
+        totalProgrcice: totalProgrcice,
+        challengeTermine: coumptChallenge,
+        joursRs: joursRs
+    }
+}
