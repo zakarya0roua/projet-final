@@ -77,7 +77,7 @@ do{
             break;
         case 7:
             // Filtrer les apprenants par niveau
-            let filtration = prompt("Entre le niveau (Solide/ En progression/ À renforcer)")
+            let filtration = prompt("Entre le niveau (Solide/ En progression/ À renforcer) ")
             console.log(filtrerParNiveau(filtration));
             break;
         case 8:
@@ -86,7 +86,7 @@ do{
             break;
         case 9:
             // Trier les apprenants par ordre alphabétique
-            console.log("9. Trier les apprenants par ordre alphabétique");
+            console.log(trierParAlphabetique());
             break;
         case 0:
             // pour quitter code
@@ -168,7 +168,6 @@ function ajouterApprenant(id, nomComplet, ville){
 
 function enregistrerResultat(id, jour, exercicesTermines, totalExercices, challengeTermine){
     let appTrouve = null;
-    let new_objet = {};
 
     for(let i = 0; i < apprenants.length; i++){
         if(apprenants[i].id === id){
@@ -198,7 +197,7 @@ function enregistrerResultat(id, jour, exercicesTermines, totalExercices, challe
         resultatDeJour.exercicesTermines = exercicesTermines;
         resultatDeJour.totalExercices = totalExercices;
         resultatDeJour.challengeTermine = challengeTermine;
-        console.log("Mise à jour de la journee");
+        console.log("Mise à jour");
     }
     else {
         appTrouve.resultats.push({
@@ -209,7 +208,6 @@ function enregistrerResultat(id, jour, exercicesTermines, totalExercices, challe
         });
         console.log("Journee ajoutee");
     }
-    return appTrouve;
     
 }
 
@@ -320,7 +318,6 @@ function afficherTableauDeBord(){
     }
     console.log("Progression moyenne: " + moyenne + "%");
 
-
     let nbSolide = filtrerParNiveau("Solide").length;
     let nbEn_progression = filtrerParNiveau("En progression").length;
     let nbA_renforcer = filtrerParNiveau("À renforcer").length;
@@ -331,4 +328,17 @@ function afficherTableauDeBord(){
 
 }
 
+// fonction trier par ordre alphabetique
 
+function trierParAlphabetique(){
+    for(let i = 0; i < apprenants.length; i++){
+        for(let j = 0; j < apprenants.length - 1; j++){
+            if(apprenants[j].nomComplet.toLocaleLowerCase() > apprenants[j + 1].nomComplet.toLocaleLowerCase()){
+                let temp = apprenants[j];
+                apprenants[j] = apprenants[j + 1];
+                apprenants[j + 1] = temp;
+            }
+        }
+    }
+    return apprenants;
+}
